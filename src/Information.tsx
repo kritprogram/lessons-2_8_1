@@ -1,16 +1,8 @@
 import { InformationLayout } from "./InformationLayout";
+import { store } from "./store";
 
-interface InformationProps {
-  currentPlayer: "X" | "O";
-  isGameEnded: boolean;
-  isDraw: boolean;
-}
-
-export const Information = ({
-  currentPlayer,
-  isGameEnded,
-  isDraw,
-}: InformationProps) => {
+export const Information = () => {
+  const { currentPlayer, isGameEnded, isDraw } = store.getState();
   let status = "";
   if (isDraw) {
     status = "Ничья";

@@ -1,34 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { store } from "./store";
 import { GameLayout } from "./GameLayout";
-
-const initialField: string[] = Array(9).fill("");
+import type { GameState } from "./types";
 
 const Game = () => {
-  const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
-  const [field, setField] = useState<string[]>(initialField);
-  const [isGameEnded, setGameEnded] = useState<boolean>(false);
-  const [isDraw, setDraw] = useState<boolean>(false);
+  const [, setState] = useState<GameState>(store.getState());
 
-  const resetGame = () => {
-    setField(initialField);
-    setCurrentPlayer("X");
-    setGameEnded(false);
-    setDraw(false);
-  };
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setState(store.getState());
+    });
 
-  return (
-    <GameLayout
-      currentPlayer={currentPlayer}
-      field={field}
-      isGameEnded={isGameEnded}
-      isDraw={isDraw}
-      setField={setField}
-      setCurrentPlayer={setCurrentPlayer}
-      setGameEnded={setGameEnded}
-      setDraw={setDraw}
-      resetGame={resetGame}
-    />
-  );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return <GameLayout />;
 };
 
 export default Game;
