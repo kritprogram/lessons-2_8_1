@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
-import { store } from "./store";
+import { useDispatch, useSelector } from "react-redux";
 import { GameLayout } from "./GameLayout";
-import type { GameState } from "./types";
+import { actions, type AppDispatch, type RootState } from "./store";
 
 const Game = () => {
-  const [, setState] = useState<GameState>(store.getState());
+  const { isGameEnded, isDraw } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch<AppDispatch>();
+  const handleReset = () => dispatch(actions.restartGame());
 
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      setState(store.getState());
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  return <GameLayout />;
+  return (
+    <GameLayout showReset={isGameEnded || isDraw} handleReset={handleReset} />
+  );
 };
 
 export default Game;

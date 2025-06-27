@@ -1,10 +1,14 @@
+import { useSelector, useDispatch } from "react-redux";
 import { FieldLayout } from "./FieldLayout";
-import { store } from "./store";
+import { type RootState, type AppDispatch, actions } from "./store";
 
 export const Field = () => {
-  const { field } = store.getState();
+  const field = useSelector((state: RootState) => state.field);
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleClick = (index: number) => {
-    store.dispatch({ type: "SET_FIELD", payload: { index } });
+    dispatch(actions.setField(index));
   };
+
   return <FieldLayout field={field} handleClick={handleClick} />;
 };

@@ -1,19 +1,12 @@
-export type Player = "X" | "O";
+import { actions } from "./store";
+
+export type GameAction = ReturnType<
+  typeof actions.setField | typeof actions.restartGame
+>;
 
 export interface GameState {
   field: string[];
-  currentPlayer: Player;
+  currentPlayer: "X" | "O";
   isGameEnded: boolean;
   isDraw: boolean;
 }
-
-export interface SetFieldAction {
-  type: "SET_FIELD";
-  payload: { index: number };
-}
-
-export interface RestartGameAction {
-  type: "RESTART_GAME";
-}
-
-export type GameAction = SetFieldAction | RestartGameAction;
