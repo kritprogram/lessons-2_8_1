@@ -1,9 +1,14 @@
+import { Component } from "react";
 import styles from "./styles/information.module.css";
 
 interface InformationLayoutProps {
   status: string;
 }
 
-export const InformationLayout = ({ status }: InformationLayoutProps) => {
-  return <div className={styles.information}>{status}</div>;
-};
+class InformationLayout extends Component<InformationLayoutProps> {
+  render() {
+    return <div className={styles.information}>{this.props.status}</div>;
+  }
+}
+
+export default InformationLayout;

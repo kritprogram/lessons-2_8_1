@@ -1,14 +1,37 @@
-import { useSelector, useDispatch } from "react-redux";
-import { FieldLayout } from "./FieldLayout";
-import { type RootState, type AppDispatch, actions } from "./store";
+import { connect } from "react-redux";
+import FieldLayout from "./FieldLayout";
+import { actions } from "./store";
+import type { RootState } from "./store";
+import { Component } from "react";
 
-export const Field = () => {
-  const field = useSelector((state: RootState) => state.field);
-  const dispatch = useDispatch<AppDispatch>();
+type StateProps = {
+  field: string[];
+};
 
-  const handleClick = (index: number) => {
-    dispatch(actions.setField(index));
+type DispatchProps = {
+  setField: (index: number) => void;
+};
+
+type FieldProps = StateProps & DispatchProps;
+
+class Field extends Component<FieldProps> {
+  handleClick = (index: number) => {
+    this.props.setField(index);
   };
 
-  return <FieldLayout field={field} handleClick={handleClick} />;
+  render() {
+    return (
+      <FieldLayout field={this.props.field} handleClick={this.handleClick} />
+    );
+  }
+}
+
+const mapStateToProps = (state: RootState): StateProps => ({
+  field: state.field,
+});
+
+const mapDispatchToProps: DispatchProps = {
+  setField: actions.setField,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Field);

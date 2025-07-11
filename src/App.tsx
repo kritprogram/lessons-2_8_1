@@ -1,15 +1,42 @@
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { GameLayout } from "./GameLayout";
-import { actions, type AppDispatch, type RootState } from "./store";
+import { actions, type RootState } from "./store";
+import { Component } from "react";
 
-const Game = () => {
-  const { isGameEnded, isDraw } = useSelector((state: RootState) => state);
-  const dispatch = useDispatch<AppDispatch>();
-  const handleReset = () => dispatch(actions.restartGame());
-
-  return (
-    <GameLayout showReset={isGameEnded || isDraw} handleReset={handleReset} />
-  );
+type StateProps = {
+  isGameEnded: boolean;
+  isDraw: boolean;
+};
+type DispatchProps = {
+  restartGame: () => void;
 };
 
-export default Game;
+type GameProps = StateProps & DispatchProps;
+class Game extends Component<GameProps> {
+  constructor(props: GameProps) {
+    super(props);
+  }
+  handleReset = () => this.props.restartGame();
+
+  render() {
+    const { isGameEnded, isDraw } = this.props;
+
+    return (
+      <GameLayout
+        showReset={isGameEnded || isDraw}
+        handleReset={this.handleReset}
+      />
+    );
+  }
+}
+
+const mapStateToProps = (state: RootState): StateProps => ({
+  isGameEnded: state.isGameEnded,
+  isDraw: state.isDraw,
+});
+
+const mapDispatchToProps: DispatchProps = {
+  restartGame: actions.restartGame,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
