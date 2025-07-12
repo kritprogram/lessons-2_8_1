@@ -1,5 +1,4 @@
 import { Component } from "react";
-import styles from "./styles/field.module.css";
 
 interface FieldLayoutProps {
   field: string[];
@@ -11,11 +10,11 @@ class FieldLayout extends Component<FieldLayoutProps> {
     const { field, handleClick } = this.props;
 
     return (
-      <div className={styles.field}>
+      <div className="grid grid-cols-3 gap-1.5">
         {field.map((cell, index) => (
           <button
             key={index}
-            className={styles.cell}
+            className="w-20 h-20 text-3xl flex items-center justify-center cursor-pointer bg-gray-100 border rounded"
             onClick={() => handleClick(index)}
           >
             {cell}

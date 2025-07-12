@@ -1,6 +1,5 @@
 import Information from "./Information";
 import Field from "./Field";
-import styles from "./styles/game.module.css";
 import { Component, type ReactNode } from "react";
 export interface GameLayoutProps {
   showReset: boolean;
@@ -16,11 +15,14 @@ export class GameLayout extends Component<GameLayoutProps> {
     const { showReset, handleReset } = this.props;
 
     return (
-      <div className={styles.game}>
+      <div className="flex flex-col items-center gap-5">
         <Information />
         <Field />
         {showReset && (
-          <button onClick={handleReset} className={styles.resetButton}>
+          <button
+            onClick={handleReset}
+            className="mt-5 px-5 py-2 text-base cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
             Начать заново
           </button>
         )}

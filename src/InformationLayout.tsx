@@ -1,5 +1,4 @@
 import { Component } from "react";
-import styles from "./styles/information.module.css";
 
 interface InformationLayoutProps {
   status: string;
@@ -7,7 +6,7 @@ interface InformationLayoutProps {
 
 class InformationLayout extends Component<InformationLayoutProps> {
   render() {
-    return <div className={styles.information}>{this.props.status}</div>;
+    return <div className="text-xl font-bold">{this.props.status}</div>;
   }
 }
 
